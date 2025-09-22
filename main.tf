@@ -61,10 +61,13 @@ resource "helm_release" "istiod" {
   namespace  = var.istio_system_namespace
   wait       = true
 
-  set {
-    name  = "profile"
-    value = var.istio_mode
-  }
+  set = [
+    {
+      name  = "profile"
+      type  = "string"
+      value = var.istio_mode
+    }
+  ]
 
   depends_on = [null_resource.install_gateway_api_crds]
 }
