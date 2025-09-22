@@ -37,3 +37,33 @@ variable "istio_mode" {
   default     = "ambient"
   description = "Istio installation mode, see https://github.com/istio/istio/tree/master/manifests/profiles"
 }
+
+variable "wait_until_istio_base_ready" {
+  type        = bool
+  default     = true
+  description = "Whether to wait until the Istio base is ready after installation"
+}
+
+variable "wait_until_istio_istiod_ready" {
+  type        = bool
+  default     = true
+  description = "Whether to wait until the Istio istiod is ready after installation"
+}
+
+variable "wait_until_istio_cni_ready" {
+  type        = bool
+  default     = true
+  description = "Whether to wait until the Istio CNI is ready after installation"
+}
+
+variable "wait_until_istio_ztunnel_ready" {
+  type        = bool
+  default     = true
+  description = "Whether to wait until the Istio Ztunnel is ready after installation"
+}
+
+variable "wait_until_istio_gateway_ready" {
+  type        = bool
+  default     = true
+  description = "Whether to wait until the Istio Gateway is ready after installation"
+}

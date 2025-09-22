@@ -10,7 +10,7 @@ resource "helm_release" "istio_base" {
   repository = local.istio_chart_repository
   version    = var.chart_version
   namespace  = var.istio_system_namespace
-  wait       = true
+  wait       = var.wait_until_istio_base_ready
 }
 
 resource "null_resource" "install_gateway_api_crds" {
@@ -59,7 +59,7 @@ resource "helm_release" "istiod" {
   repository = local.istio_chart_repository
   version    = var.chart_version
   namespace  = var.istio_system_namespace
-  wait       = true
+  wait       = var.wait_until_istio_istiod_ready
 
   set = [
     {
@@ -78,7 +78,7 @@ resource "helm_release" "istio_cni" {
   repository = local.istio_chart_repository
   version    = var.chart_version
   namespace  = var.istio_system_namespace
-  wait       = true
+  wait       = var.wait_until_istio_cni_ready
 
   set = [
     {
@@ -97,18 +97,18 @@ resource "helm_release" "istio_ztunnel" {
   repository = local.istio_chart_repository
   version    = var.chart_version
   namespace  = var.istio_system_namespace
-  wait       = true
+  wait       = var.wait_until_istio_ztunnel_ready
 
   depends_on = [helm_release.istio_cni]
 }
 
 resource "helm_release" "istio_gateway" {
-  name       = var.name_prefix != "" ? "${var.name_prefix}-gateway" : "gateway"
+  name       = var.name_prefix != "" ? "${var.name_prefix}-ingress" : "istio-ingress"
   chart      = "gateway"
   repository = local.istio_chart_repository
   version    = var.chart_version
   namespace  = var.istio_system_namespace
-  wait       = true
+  wait       = var.wait_until_istio_gateway_ready
 
   depends_on = [helm_release.istio_cni]
 }
