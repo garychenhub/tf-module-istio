@@ -80,10 +80,13 @@ resource "helm_release" "istio_cni" {
   namespace  = var.istio_system_namespace
   wait       = true
 
-  set {
-    name  = "profile"
-    value = var.istio_mode
-  }
+  set = [
+    {
+      name  = "profile"
+      type  = "string"
+      value = var.istio_mode
+    }
+  ]
 
   depends_on = [helm_release.istiod]
 }
